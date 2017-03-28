@@ -2,6 +2,7 @@
 #! _*_ coding: utf-8 _*_
 
 import feedparser
+import pandas
 import time
 import datetime
 import MySQLdb
@@ -28,11 +29,11 @@ urllist = [
 
 filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報']
 
-CONSUMER_KEY    = ''
-CONSUMER_SECRET = ''
-ACCESS_KEY      = ''
-ACCESS_SECRET   = ''
-tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
+CONSUMER_KEY    = 'Qhq2HKSNSg8TFNT0gmx2uRdu8'
+CONSUMER_SECRET = '09NIhl0goiWNaSO1Z1FRvxzCU5maGuAbm6jygh8JVmjo2Issv'
+ACCESS_KEY      = '826728075685568517-1uBnScjmeG9X9kCNfxaBVzrhAKSEhFM'
+ACCESS_SECRET   = 'PwIStmNEtgjOwXaL68t09NTlI6AmczvPj9FR7DMPSP8AB'
+#tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()
 
@@ -64,14 +65,15 @@ for url in urllist:
 
           connector.commit()
             
+          #print("[***%s***](%s)" % (entry.title, entry.link))
           tweet = "\"" + entry.title + " - " + channelname + "\" " + entry.link
           print(tweet)
-          tw.update_status(status=tweet)
+          #tw.update_status(status=tweet)
 
         cursor.close
         connector.close
 
-      break
+        break
 
 print("------------------ %s ---" % (dt))
 
