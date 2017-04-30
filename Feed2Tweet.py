@@ -9,71 +9,80 @@ import MySQLdb
 import twython
 
 urllist = [
+'http://www3.nhk.or.jp/rss/news/cat0.xml',
 'http://www.zou3.net/php/rss/nikkei2rss.php?head=main',
-'http://rss.asahi.com/rss/asahi/newsheadlines.rdf', 
 'http://rss.rssad.jp/rss/mainichi/flash.rss',
 'https://headlines.yahoo.co.jp/rss/san-dom.xml',
 'http://rss.wor.jp/rss1/yomiuri/latestnews.rdf',
 'http://www.zou3.net/php/rss/chunichi2rss.php?cat=main',
 'http://www.nikkan.co.jp/rss/nksrdf.rdf',
+'http://www.jiji.com/rss/ranking.rdf',
+'http://feeds.cnn.co.jp/rss/cnn/cnn.rdf',
+'http://feeds.japan.cnet.com/rss/cnet/all.rdf',
 'http://www.security-next.com/feed',
 'https://the01.jp/feed/',
 'http://feed.rssad.jp/rss/gigazine/rss_2.0',
 'http://rss.rssad.jp/rss/itmatmarkit/rss091.xml',
+'http://rss.rssad.jp/rss/itmnews/2.0/news_bursts.xml',
 'http://itpro.nikkeibp.co.jp/rss/news.rdf',
-'http://www.jpcert.or.jp/rss/jpcert.rdf',
+'http://feeds.japan.zdnet.com/rss/zdnet/all.rdf',
 'http://www.ipa.go.jp/security/rss/alert.rdf',
 'http://feeds.trendmicro.com/TM-Securityblog/',
 'https://feed43.com/0681080852134530.xml'
 ]
 
-filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報']
+#'http://rss.asahi.com/rss/asahi/newsheadlines.rdf', 
+#'http://www.jpcert.or.jp/rss/jpcert.rdf',
+
+filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報','DDoS', 'マイナンバー', '顧客情報', '不審な通信',  'なりすまし', 'インシデント', 'ハッカー', 'サイバーテロ','サイト攻撃', 'フィッシングサイト', 'フィッシング攻撃', 'メール誤送信','ハッキング', '脆弱性', 'ランサム', 'アドレス流出', 'バックドア', 'マルウェア']
+filterlist2 = ['PR：', 'AD: ']
 
 CONSUMER_KEY    = ''
 CONSUMER_SECRET = ''
 ACCESS_KEY      = ''
 ACCESS_SECRET   = ''
-#tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
+tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()
 
 for url in urllist:
   fd = feedparser.parse(url)
-  channelurl = fd.feed.link
-  channelname = fd.feed.title
 
   for entry in fd.entries:
     for key in filterlist:
-      if key in entry.title :
-        connector = MySQLdb.connect(
-            user = 'root',
-            passwd = 'dbmaster',
-            host = 'localhost',
-            db = 'rss',
-            charset = 'utf8',
-            use_unicode = True)
+      if key in entry.title:
+        for key2 in filterlist2:
+          if not key2 in entry.title:
+            connector = MySQLdb.connect(
+                user = 'root',
+                passwd = 'dbmaster',
+                host = 'localhost',
+                db = 'rss',
+                charset = 'utf8',
+                use_unicode = True)
 
-        cursor = connector.cursor()
+            cursor = connector.cursor()
 
-        cursor.execute(
-            "select link from incident where link=%s", (entry.link,))
+            cursor.execute(
+                "select link from incident where link=%s", (entry.link,))
 
-        if len(cursor.fetchall()) == 0:
-          cursor.execute(
-              "insert into incident (link, title, channel, updated) values (%s, %s, %s, %s)", 
-              (entry.link, entry.title, channelurl, dt))
+            if len(cursor.fetchall()) == 0:
+              cursor.execute(
+                  "insert into incident (link, title, channel, updated) values (%s, %s, %s, %s)", 
+                  (entry.link, entry.title, fd.feed.link, dt))
 
-          connector.commit()
-            
-          #print("[***%s***](%s)" % (entry.title, entry.link))
-          tweet = "\"" + entry.title + " - " + channelname + "\" " + entry.link
-          print(tweet)
-          #tw.update_status(status=tweet)
+              connector.commit()
+                    
+              #print("[***%s***](%s)" % (entry.title, entry.link))
+              tweet = entry.title + ": " + fd.feed.title + "\n" + entry.link
+              print(tweet)
+              tw.update_status(status=tweet)
 
-        cursor.close
-        connector.close
+            cursor.close
+            connector.close
 
-        break
+            break
+      break
 
 print("------------------ %s ---" % (dt))
 
@@ -100,6 +109,8 @@ print("------------------ %s ---" % (dt))
 #   http://feed.rssad.jp/rss/gigazine/rss_2.0
 #  ITpro
 #   http://itpro.nikkeibp.co.jp/rss/news.rdf
+#  ZD Net Japan
+#   http://feeds.japan.zdnet.com/rss/zdnet/all.rdf
 
 # News Paper
 #  Asashi
@@ -118,4 +129,8 @@ print("------------------ %s ---" % (dt))
 #   http://www.zou3.net/php/rss/nikkei2rss.php?head=main
 #  Nikkankougyou
 #   http://www.nikkan.co.jp/rss/nksrdf.rdf
+
+# Terevision Station
+#  NHK
+#   http://www3.nhk.or.jp/rss/news/cat0.xml
 

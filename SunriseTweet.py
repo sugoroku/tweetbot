@@ -16,23 +16,31 @@ api = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 result = pywapi.get_weather_from_weather_com('JAXX0085')
 pp = pprint.PrettyPrinter(indent=4)
 
+#print("sunrise: "+ result['forecasts'][0]['sunrise'])
+#print("weather: "+ result['forecasts'][0]['day']['brief_text'])
+#print("high temp: "+ result['forecasts'][0]['high'])
+
 sunrise = result['forecasts'][1]['sunrise']
 brief_text = result['forecasts'][1]['day']['brief_text']
 high_temp = result['forecasts'][1]['high']
 chance_precip = result['forecasts'][1]['day']['chance_precip']
 
-if brief_text == 'Sunny' or brief_text == 'Clear' or brief_text == 'M Sunny' or brief_text == 'M Clear' or brief_text == 'Sunny/Wind':
+if brief_text == 'Sunny' or brief_text == 'Clear' or brief_text == 'M Sunny' or brief_text == 'M Clear' or brief_text == 'Sunny/Wind' or brief_text == 'M Sunny/Wind':
   weather = "晴れ"
-elif brief_text == 'P Cloudy':
+elif brief_text == 'P Cloudy' or brief_text == 'P Cldy/Wind':
   weather = "晴れ時々曇り"
 elif brief_text == 'Clear Late':
   weather = "曇りのち晴れ"
-elif brief_text == 'M Cloudy' or brief_text == 'Cloudy':
+elif brief_text == 'M Cloudy' or brief_text == 'Cloudy' or brief_text == 'Cloudy/Wind' or brief_text == 'M Cldy/Wind':
   weather = "曇り"
-elif brief_text == 'Rain' or brief_text == 'Rain Early' or brief_text == 'Showers':
+elif brief_text == 'Rain' or brief_text == 'Rain Early' or brief_text == 'Showers' or brief_text == 'Rain/Wind':
   weather = "雨"
-elif brief_text == 'PM Showers':
-  weather = "午後ににわか雨"
+elif brief_text == 'PM Showers' or brief_text == 'PM Rain':
+  weather = "午後に雨"
+elif brief_text == 'AM Showers' or brief_text == 'AM Rain/Wind' or brief_text == 'AM Lgt Rain':
+  weather = "午前に雨"
+elif brief_text == 'PM T-Storms':
+  weather = "午後に強風を伴う雨"
 else:
   weather = brief_text
 
