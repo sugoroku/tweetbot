@@ -35,7 +35,7 @@ urllist = [
 #'http://www.jpcert.or.jp/rss/jpcert.rdf',
 
 filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報','DDoS', 'マイナンバー', '顧客情報', '不審な通信',  'なりすまし', 'インシデント', 'ハッカー', 'サイバーテロ','サイト攻撃', 'フィッシングサイト', 'フィッシング攻撃', 'メール誤送信','ハッキング', '脆弱性', 'ランサム', 'アドレス流出', 'バックドア', 'マルウェア']
-filterlist2 = ['PR：', 'AD: ']
+filterlist2 = ['PR：', 'AD：']
 
 CONSUMER_KEY    = ''
 CONSUMER_SECRET = ''
@@ -49,40 +49,53 @@ for url in urllist:
   fd = feedparser.parse(url)
 
   for entry in fd.entries:
+    
+    flag = False
+
     for key in filterlist:
       if key in entry.title:
+        flag = True
+
         for key2 in filterlist2:
-          if not key2 in entry.title:
-            connector = MySQLdb.connect(
-                user = 'root',
-                passwd = 'dbmaster',
-                host = 'localhost',
-                db = 'rss',
-                charset = 'utf8',
-                use_unicode = True)
-
-            cursor = connector.cursor()
-
-            cursor.execute(
-                "select link from incident where link=%s", (entry.link,))
-
-            if len(cursor.fetchall()) == 0:
-              cursor.execute(
-                  "insert into incident (link, title, channel, updated) values (%s, %s, %s, %s)", 
-                  (entry.link, entry.title, fd.feed.link, dt))
-
-              connector.commit()
-                    
-              #print("[***%s***](%s)" % (entry.title, entry.link))
-              tweet = entry.title + ": " + fd.feed.title + "\n" + entry.link
-              print(tweet)
-              tw.update_status(status=tweet)
-
-            cursor.close
-            connector.close
-
+          if key2 in entry.title:
+            flag = False
             break
-      break
+          else:
+            continue
+
+    if flag:
+      connector = MySQLdb.connect(
+          user = 'root',
+          passwd = 'dbmaster',
+          host = 'localhost',
+          db = 'rss',
+          charset = 'utf8',
+          use_unicode = True)
+
+      cursor = connector.cursor()
+
+      cursor.execute(
+          "select link from incident where link=%s", (entry.link,))
+
+      if len(cursor.fetchall()) == 0:
+        cursor.execute(
+            "insert into incident (link, title, channel, updated) values (%s, %s, %s, %s)", 
+            (entry.link, entry.title, fd.feed.link, dt))
+
+        connector.commit()
+              
+        #print("[***%s***](%s)" % (entry.title, entry.link))
+        tweet = entry.title + ": " + fd.feed.title + "\n" + entry.link
+        print(tweet)
+        tw.update_status(status=tweet)
+
+      cursor.close
+      connector.close
+
+      flag = False
+
+    else:
+      continue
 
 print("------------------ %s ---" % (dt))
 
