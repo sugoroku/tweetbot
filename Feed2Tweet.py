@@ -35,9 +35,9 @@ urllist = [
 #'http://www.jpcert.or.jp/rss/jpcert.rdf',
 
 filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報','DDoS', 'マイナンバー', '顧客情報', '不審な通信',  'なりすまし', 'インシデント', 'ハッカー', 'サイバーテロ','サイト攻撃', 'フィッシングサイト', 'フィッシング攻撃', 'メール誤送信','ハッキング', '脆弱性', 'ランサム', 'アドレス流出', 'バックドア', 'マルウェア']
-filterlist2 = ['PR：', 'AD：']
+filterlist2 = ['PR：', 'AD：', 'PR: ','AD: ']
 
-CONSUMER_KEY    = ''
+CONSUMER_KEY    = 'Qhq2HKSNSg8TFNT0gmx2uRdu8'
 CONSUMER_SECRET = ''
 ACCESS_KEY      = ''
 ACCESS_SECRET   = ''
