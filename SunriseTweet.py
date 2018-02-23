@@ -25,22 +25,24 @@ brief_text = result['forecasts'][1]['day']['brief_text']
 high_temp = result['forecasts'][1]['high']
 chance_precip = result['forecasts'][1]['day']['chance_precip']
 
-if brief_text == 'Sunny' or brief_text == 'Clear' or brief_text == 'M Sunny' or brief_text == 'M Clear' or brief_text == 'Sunny/Wind' or brief_text == 'M Sunny/Wind':
+if brief_text == 'Sunny' or brief_text == 'Clear' or brief_text == 'M Sunny' or brief_text == 'M Clear' or brief_text == 'Sunny/Wind' or brief_text == 'M Sunny/Wind' or brief_text == 'M Sun/Wind':
   weather = "晴れ"
 elif brief_text == 'P Cloudy' or brief_text == 'P Cldy/Wind':
   weather = "晴れ時々曇り"
 elif brief_text == 'Clear Late':
   weather = "曇りのち晴れ"
-elif brief_text == 'M Cloudy' or brief_text == 'Cloudy' or brief_text == 'Cloudy/Wind' or brief_text == 'M Cldy/Wind':
+elif brief_text == 'M Cloudy' or brief_text == 'Cloudy' or brief_text == 'Cloudy/Wind' or brief_text == 'M Cldy/Wind' or brief_text == 'AM Clouds':
   weather = "曇り"
-elif brief_text == 'Rain' or brief_text == 'Rain Early' or brief_text == 'Showers' or brief_text == 'Rain/Wind':
+elif brief_text == 'Rain' or brief_text == 'Rain Early' or brief_text == 'Showers' or brief_text == 'Rain/Wind' or brief_text == 'Showers/Wind' or brief_text == 'Few Showers':
   weather = "雨"
 elif brief_text == 'PM Showers' or brief_text == 'PM Rain':
   weather = "午後に雨"
-elif brief_text == 'AM Showers' or brief_text == 'AM Rain/Wind' or brief_text == 'AM Lgt Rain':
+elif brief_text == 'AM Showers' or brief_text == 'AM Rain/Wind' or brief_text == 'AM Lgt Rain' or brief_text == 'AM Rain':
   weather = "午前に雨"
 elif brief_text == 'PM T-Storms':
   weather = "午後に強風を伴う雨"
+elif brief_text == 'Rain/Thunder' or brief_text == 'Sct T-Storms' or brief_text == 'T-Storms':
+  weather = "雷雨"
 else:
   weather = brief_text
 

@@ -7,6 +7,21 @@ import time
 import datetime
 import MySQLdb
 import twython
+import json
+import requests
+import time
+
+#function to shorten the url
+def urlShotern(url):
+   key=""
+   gurl="https://www.googleapis.com/urlshortener/v1/url?key="+key
+   data={}
+   data['longUrl']=url
+   data_json = json.dumps(data)
+   headers = {'Content-type': 'application/json'}
+   response = requests.post(gurl, data=data_json, headers=headers)
+   a=response.json()
+   return a['id']
 
 urllist = [
 'http://www3.nhk.or.jp/rss/news/cat0.xml',
@@ -34,13 +49,13 @@ urllist = [
 #'http://rss.asahi.com/rss/asahi/newsheadlines.rdf', 
 #'http://www.jpcert.or.jp/rss/jpcert.rdf',
 
-filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報','DDoS', 'マイナンバー', '顧客情報', '不審な通信',  'なりすまし', 'インシデント', 'ハッカー', 'サイバーテロ','サイト攻撃', 'フィッシングサイト', 'フィッシング攻撃', 'メール誤送信','ハッキング', '脆弱性', 'ランサム', 'アドレス流出', 'バックドア', 'マルウェア']
+filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報','DDoS', 'マイナンバー', '顧客情報', '不審な通信',  'なりすまし', 'インシデント', 'ハッカー', 'サイバーテロ','サイト攻撃', 'フィッシングサイト', 'フィッシング攻撃', 'メール誤送信','ハッキング', '脆弱性', 'ランサム', 'アドレス流出', 'バックドア', 'マルウェア','トロジャン']
 filterlist2 = ['PR：', 'AD：', 'PR: ','AD: ']
 
-CONSUMER_KEY    = ''
-CONSUMER_SECRET = ''
-ACCESS_KEY      = ''
-ACCESS_SECRET   = ''
+CONSUMER_KEY    = 'Qhq2HKSNSg8TFNT0gmx2uRdu8'
+CONSUMER_SECRET = '09NIhl0goiWNaSO1Z1FRvxzCU5maGuAbm6jygh8JVmjo2Issvo'
+ACCESS_KEY      = '826728075685568517-1uBnScjmeG9X9kCNfxaBVzrhAKSEhFM'
+ACCESS_SECRET   = 'PwIStmNEtgjOwXaL68t09NTlI6AmczvPj9FR7DMPSP8AB'
 tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()
@@ -78,14 +93,15 @@ for url in urllist:
           "select link from incident where link=%s", (entry.link,))
 
       if len(cursor.fetchall()) == 0:
+        shorturl=urlShotern(entry.link)
         cursor.execute(
             "insert into incident (link, title, channel, updated) values (%s, %s, %s, %s)", 
-            (entry.link, entry.title, fd.feed.link, dt))
+            (shorturl, entry.title, fd.feed.link, dt))
 
         connector.commit()
               
         #print("[***%s***](%s)" % (entry.title, entry.link))
-        tweet = entry.title + ": " + fd.feed.title + "\n" + entry.link
+        tweet = entry.title + ": " + fd.feed.title + "\n" + shorturl 
         print(tweet)
         tw.update_status(status=tweet)
 

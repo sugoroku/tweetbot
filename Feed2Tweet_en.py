@@ -7,34 +7,52 @@ import time
 import datetime
 import MySQLdb
 import twython
+import json
+import requests
+import time
+
+#function to shorten the url
+def urlShotern(url):
+   key=""
+   gurl="https://www.googleapis.com/urlshortener/v1/url?key="+key
+   data={}
+   data['longUrl']=url
+   data_json = json.dumps(data)
+   headers = {'Content-type': 'application/json'}
+   response = requests.post(gurl, data=data_json, headers=headers)
+   a=response.json()
+   return a['id']
 
 urllist = [
 'http://www.us-cert.gov/ncas/all.xml',
-'https//www.veracode.com/blog/feed',
 'http://www.kb.cert.org/vulfeed',
-'http://blog.shodan.io/rss/',
+'https://www.bleepingcomputer.com/feed/',
+'http://thehackernews.com/feeds/posts/default',
 'http://feeds.feedburner.com/securityweek',
 'http://feeds.arstechnica.com/arstechnica/security',
+'https://www.endgame.com/feed.xml',
+'https://www.virusbulletin.com/rss',
+'http://feeds.trendmicro.com/Anti-MalwareBlog',
+'https://www.fireeye.com/blog/threat-research/_jcr_content.feed',
+'http://threatpost.com/feed/',
+'https://securelist.com/feed/',
 'https://www.welivesecurity.com/feed/',
 'https://blog.malwarebytes.com/feed/',
-'http://thehackernews.com/feeds/posts/default',
+'http://blog.shodan.io/rss/',
+'https://blog.kryptoslogic.com/feed.xml',
 'https://krebsonsecurity.com/feed',
 'https://www.grahamcluley.com/feed/',
 'https://www.schneier.com/blog/atom.xml',
-'http://feeds.feedburner.com/TroyHunt',
-'https://blog.kryptoslogic.com/feed.xml',
-'http://www.malware-traffic-analysis.net/blog-entries.rss',
-'https://www.fireeye.com/blog/threat-research/_jcr_content.feed',
-'http://feeds.trendmicro.com/Anti-MalwareBlog'
+'https://blog.checkpoint.com/feed/'
 ]
 
-filterlist = ['Malvertis','malvertis','Ransomeware','ransomeware','Ransomworm','ramsomworm','Malware','malware','RootKit','rootkit','Backdoor','backdoor','RAT','ShadowBrokers','Exploit','exploit','Hacking Group','SQL Injection','Vulnerab','Wikileaks','Man-in-the-Middle','NSA','DDoS','Worm','worm','CIA','hijack','Hijack','0-day','Zero-day','zero-day','Malicious','malicious']
-filterlist2 = ['Example']
+filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofancy','SOFANCY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','Noth Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','Cyber Espionage']
+#filterlist2 = ['Example']
 
-CONSUMER_KEY    = ''
-CONSUMER_SECRET = ''
-ACCESS_KEY      = ''
-ACCESS_SECRET   = ''
+CONSUMER_KEY    = 'mkPC1IRfaYG5Lc9iJdFSIB5Pw'
+CONSUMER_SECRET = 'e0nC7wl4YjEWxI14xdW7zOhUPgqnw2bZixysHlDBi4A2QNDf1S'
+ACCESS_KEY      = '826728075685568517-A5WSi1ymUEWdAPMxKq03WJgV7uQYVlo'
+ACCESS_SECRET   = 'aSNt8UfmlwxGUvz60oUkELBgJ8pZrBTvxkcUB2PB67FPN'
 tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()
@@ -50,12 +68,12 @@ for url in urllist:
       if key in entry.title:
         flag = True
 
-        for key2 in filterlist2:
-          if key2 in entry.title:
-            flag = False
-            break
-          else:
-            continue
+#        for key2 in filterlist2:
+#          if key2 in entry.title:
+#            flag = False
+#            break
+#          else:
+#            continue
 
     if flag:
       connector = MySQLdb.connect(
@@ -72,21 +90,23 @@ for url in urllist:
           "select link from secinfo_en where link=%s", (entry.link,))
 
       if len(cursor.fetchall()) == 0:
+        shorturl=urlShotern(entry.link)
         cursor.execute(
             "insert into secinfo_en (link, title, channel, updated) values (%s, %s, %s, %s)", 
-            (entry.link, entry.title, fd.feed.link, dt))
+            (shorturl, entry.title, fd.feed.link, dt))
 
         connector.commit()
               
         #print("[***%s***](%s)" % (entry.title, entry.link))
-        tweet = entry.title + ": " + fd.feed.title + "\n" + entry.link
+        tweet = entry.title + fd.feed.title + "\n" + shorturl 
         print(tweet)
-        tw.update_status(status=tweet)
+        #tw.update_status(status=tweet)
 
       cursor.close
       connector.close
 
       flag = False
+      time.sleep(1)
 
     else:
       continue
