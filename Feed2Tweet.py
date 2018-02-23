@@ -52,10 +52,10 @@ urllist = [
 filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報','DDoS', 'マイナンバー', '顧客情報', '不審な通信',  'なりすまし', 'インシデント', 'ハッカー', 'サイバーテロ','サイト攻撃', 'フィッシングサイト', 'フィッシング攻撃', 'メール誤送信','ハッキング', '脆弱性', 'ランサム', 'アドレス流出', 'バックドア', 'マルウェア','トロジャン']
 filterlist2 = ['PR：', 'AD：', 'PR: ','AD: ']
 
-CONSUMER_KEY    = 'Qhq2HKSNSg8TFNT0gmx2uRdu8'
-CONSUMER_SECRET = '09NIhl0goiWNaSO1Z1FRvxzCU5maGuAbm6jygh8JVmjo2Issvo'
-ACCESS_KEY      = '826728075685568517-1uBnScjmeG9X9kCNfxaBVzrhAKSEhFM'
-ACCESS_SECRET   = 'PwIStmNEtgjOwXaL68t09NTlI6AmczvPj9FR7DMPSP8AB'
+CONSUMER_KEY    = ''
+CONSUMER_SECRET = ''
+ACCESS_KEY      = ''
+ACCESS_SECRET   = ''
 tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()

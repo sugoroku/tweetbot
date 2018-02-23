@@ -49,10 +49,10 @@ urllist = [
 filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofancy','SOFANCY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','Noth Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','Cyber Espionage']
 #filterlist2 = ['Example']
 
-CONSUMER_KEY    = 'mkPC1IRfaYG5Lc9iJdFSIB5Pw'
-CONSUMER_SECRET = 'e0nC7wl4YjEWxI14xdW7zOhUPgqnw2bZixysHlDBi4A2QNDf1S'
-ACCESS_KEY      = '826728075685568517-A5WSi1ymUEWdAPMxKq03WJgV7uQYVlo'
-ACCESS_SECRET   = 'aSNt8UfmlwxGUvz60oUkELBgJ8pZrBTvxkcUB2PB67FPN'
+CONSUMER_KEY    = ''
+CONSUMER_SECRET = ''
+ACCESS_KEY      = ''
+ACCESS_SECRET   = ''
 tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()
