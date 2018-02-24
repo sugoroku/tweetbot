@@ -94,12 +94,12 @@ for url in urllist:
         shorturl=urlShotern(entry.link)
         cursor.execute(
             "insert into secinfo_en (link, title, channel, updated) values (%s, %s, %s, %s)", 
-            (shorturl, entry.title, fd.feed.link, dt))
+            (entry.link, entry.title, fd.feed.link, dt))
 
         connector.commit()
               
         #print("[***%s***](%s)" % (entry.title, entry.link))
-        tweet = entry.title + fd.feed.title + "\n" + shorturl 
+        tweet = entry.title + ": " +fd.feed.title + "\n" + shorturl 
         print(tweet)
         tw.update_status(status=tweet)
 

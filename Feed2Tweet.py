@@ -97,7 +97,7 @@ for url in urllist:
         shorturl=urlShotern(entry.link)
         cursor.execute(
             "insert into incident (link, title, channel, updated) values (%s, %s, %s, %s)", 
-            (shorturl, entry.title, fd.feed.link, dt))
+            (entry.link, entry.title, fd.feed.link, dt))
 
         connector.commit()
               
