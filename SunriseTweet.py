@@ -6,11 +6,12 @@ import pprint
 import twython
 import datetime
 import time
+import os
 
-CONSUMER_KEY    = ''
-CONSUMER_SECRET = ''
-ACCESS_KEY      = ''
-ACCESS_SECRET   = ''
+CONSUMER_KEY    = os.environ['TW_SUNRIZE_C_KEY']
+CONSUMER_SECRET = os.environ['TW_SUNRIZE_C_SECRET']
+ACCESS_KEY      = os.environ['TW_SUNRIZE_A_KEY']
+ACCESS_SECRET   = os.environ['TW_SUNRIZE_A_SECRET']
 api = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 result = pywapi.get_weather_from_weather_com('JAXX0085')

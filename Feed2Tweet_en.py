@@ -10,6 +10,7 @@ import twython
 import json
 import requests
 import time
+import os
 
 #function to shorten the url
 def urlShotern(url):
@@ -46,13 +47,13 @@ urllist = [
 'https://blog.checkpoint.com/feed/'
 ]
 
-filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofancy','SOFANCY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','Noth Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','Cyber Espionage']
+filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofancy','SOFANCY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','Noth Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','Cyber Espionage','SWIFT','Swift']
 #filterlist2 = ['Example']
 
-CONSUMER_KEY    = ''
-CONSUMER_SECRET = ''
-ACCESS_KEY      = ''
-ACCESS_SECRET   = ''
+CONSUMER_KEY    = os.environ['TW_SECNEWS_EN_C_KEY']
+CONSUMER_SECRET = os.environ['TW_SECNEWS_EN_C_SECRET']
+ACCESS_KEY      = os.environ['TW_SECNEWS_EN_A_KEY']
+ACCESS_SECRET   = os.environ['TW_SECNEWS_EN_A_SECRET']
 tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()
@@ -100,7 +101,7 @@ for url in urllist:
         #print("[***%s***](%s)" % (entry.title, entry.link))
         tweet = entry.title + fd.feed.title + "\n" + shorturl 
         print(tweet)
-        #tw.update_status(status=tweet)
+        tw.update_status(status=tweet)
 
       cursor.close
       connector.close

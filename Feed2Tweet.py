@@ -10,6 +10,7 @@ import twython
 import json
 import requests
 import time
+import os
 
 #function to shorten the url
 def urlShotern(url):
@@ -52,10 +53,10 @@ urllist = [
 filterlist = ['情報漏洩', '情報漏えい', '情報流出', '不正アクセス', 'ハッキング', '改ざん', '改竄', '不正な通信', 'サイバー攻撃', '標的型', '個人情報','DDoS', 'マイナンバー', '顧客情報', '不審な通信',  'なりすまし', 'インシデント', 'ハッカー', 'サイバーテロ','サイト攻撃', 'フィッシングサイト', 'フィッシング攻撃', 'メール誤送信','ハッキング', '脆弱性', 'ランサム', 'アドレス流出', 'バックドア', 'マルウェア','トロジャン']
 filterlist2 = ['PR：', 'AD：', 'PR: ','AD: ']
 
-CONSUMER_KEY    = ''
-CONSUMER_SECRET = ''
-ACCESS_KEY      = ''
-ACCESS_SECRET   = ''
+CONSUMER_KEY    = os.environ['TW_SECNEWS_JP_C_KEY']
+CONSUMER_SECRET = os.environ['TW_SECNEWS_JP_C_SECRET']
+ACCESS_KEY      = os.environ['TW_SECNEWS_JP_A_KEY']
+ACCESS_SECRET   = os.environ['TW_SECNEWS_JP_A_SECRET']
 tw = twython.Twython(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY,ACCESS_SECRET)
 
 dt = datetime.datetime.now()
