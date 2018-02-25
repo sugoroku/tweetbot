@@ -14,7 +14,7 @@ import os
 
 #function to shorten the url
 def urlShotern(url):
-   key=""
+   key=os.environ['GOOGLE_API_KEY']
    gurl="https://www.googleapis.com/urlshortener/v1/url?key="+key
    data={}
    data['longUrl']=url
