@@ -47,7 +47,7 @@ urllist = [
 'https://blog.checkpoint.com/feed/'
 ]
 
-filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofancy','SOFANCY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','North Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','SWIFT','Swift','espionage','Espionage','Thret Group','sofancy','Group123','Bear','NSA']
+filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofancy','SOFANCY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','North Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','SWIFT','Swift','espionage','Espionage','Threat Group','sofancy','Group123','Bear','NSA']
 
 #filterlist2 = ['Example']
 
