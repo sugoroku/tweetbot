@@ -29,6 +29,7 @@ urllist = [
 'http://www.kb.cert.org/vulfeed',
 'https://www.bleepingcomputer.com/feed/',
 'http://thehackernews.com/feeds/posts/default',
+'https://www.darkreading.com/rss_simple.asp',
 'http://feeds.feedburner.com/securityweek',
 'http://feeds.arstechnica.com/arstechnica/security',
 'https://www.endgame.com/feed.xml',
@@ -37,9 +38,16 @@ urllist = [
 'https://www.fireeye.com/blog/threat-research/_jcr_content.feed',
 'http://threatpost.com/feed/',
 'https://securelist.com/feed/',
+'https://api.connect.symantec.com/rss/v1/blogs/rss.xml',
+'https://securingtomorrow.mcafee.com/feed/',
 'https://www.welivesecurity.com/feed/',
 'https://blog.malwarebytes.com/feed/',
+'https://www.crowdstrike.com/blog/feed',
+'https://www.anomali.com/site/blog-rss',
+'http://feeds.feedburner.com/PaloAltoNetworks',
 'http://blog.shodan.io/rss/',
+'https://feeds2.feedburner.com/asert',
+'http://feeds.feedburner.com/TheAkamaiBlog',
 'https://blog.kryptoslogic.com/feed.xml',
 'https://krebsonsecurity.com/feed',
 'https://www.grahamcluley.com/feed/',
@@ -47,7 +55,7 @@ urllist = [
 'https://blog.checkpoint.com/feed/'
 ]
 
-filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofancy','SOFANCY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','North Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','SWIFT','Swift','espionage','Espionage','Threat Group','sofancy','Group123','Bear','NSA']
+filterlist = ['APT','DragonOK','Shadowbrokers','SHADOWBROKERS','Lazarus','LAZARUS','Menupass','MENUPASS','Fancy','FANCY','Sofacy','SOFACY','HIDENCOBRA','HIDEN COBRA','Hiden Cobra','Hidencobra','Group73','North Korea','NORTH KOREA','Hacker Group','Olympic','Targeted Attack','SWIFT','Swift','espionage','Espionage','Threat Group','sofancy','Group123','Bear','NSA']
 
 #filterlist2 = ['Example']
 
