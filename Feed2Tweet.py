@@ -15,14 +15,16 @@ import os
 #function to shorten the url
 def urlShotern(url):
    key=os.environ['GOOGLE_API_KEY']
-   gurl="https://www.googleapis.com/urlshortener/v1/url?key="+key
+   gurl="https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key="+key
    data={}
-   data['longUrl']=url
-   data_json = json.dumps(data)
+   data_json = json.dumps({
+  "dynamicLinkInfo": {
+    "dynamicLinkDomain": "gvgg6.app.goo.gl","link": url,"iosInfo": {"iosBundleId": "securitynews.app"}}})
+   print(data_json)
    headers = {'Content-type': 'application/json'}
    response = requests.post(gurl, data=data_json, headers=headers)
    a=response.json()
-   return a['id']
+   return a['shortLink']
 
 urllist = [
 'http://www3.nhk.or.jp/rss/news/cat0.xml',
