@@ -17,10 +17,7 @@ def urlShotern(url):
    key=os.environ['GOOGLE_API_KEY']
    gurl="https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key="+key
    data={}
-   data_json = json.dumps({
-  "dynamicLinkInfo": {
-    "dynamicLinkDomain": "gvgg6.app.goo.gl","link": url,"iosInfo": {"iosBundleId": "securitynews.app"}}})
-   print(data_json)
+   data_json = json.dumps({"dynamicLinkInfo": {"dynamicLinkDomain": "gvgg6.app.goo.gl","link": url,"iosInfo": {"iosBundleId": "securitynews.app"}}})
    headers = {'Content-type': 'application/json'}
    response = requests.post(gurl, data=data_json, headers=headers)
    a=response.json()
